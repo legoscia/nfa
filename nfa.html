@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2012 Magnus Henoch <magnus.henoch@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<html>
+<head>
+<title>neniam forgesu akuzativo</title>
+<link href='http://fonts.googleapis.com/css?family=Arbutus+Slab&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<script type='text/javascript' src='knockout-2.1.0.js'></script>
+<link rel=stylesheet href=nfa.css>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+<div data-bind="foreach: montratajFrazoj">
+<p class="tienreen" data-bind="
+  style: { top: pozicio + '%',
+           MozAnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s'
+ },
+  event: { animationend: $parent.fino },
+  click: ŝalti">
+  <span data-bind="text: antaŭ">&nbsp;</span>
+  <span data-bind="
+  text: akuzativebla,
+  css: { 
+    'kun-akuzativo': akuzativo(),
+    'sen-akuzativo': ! akuzativo()
+  }"
+   class="akuzativebla">&nbsp;</span>
+  <span data-bind="text: post">&nbsp;</span>
+</p>
+</div>
+<div data-bind="if: montratajFrazoj().length == 0">
+<div data-bind="foreach: frazoj">
+<p><span data-bind="
+  text: elektitaFrazo,
+  css: { 'ĝusta': korekta(), 'malĝusta': ! korekta() }">&nbsp;</span>
+</p>
+</div>
+<p>Poentoj: <span data-bind="text: poentoj">&nbsp;</span></p>
+<p><a href="nfa.html">Provu denove!</a></p>
+</div>
+<script>
+var FrazoModelo = function(antaŭ, akuzativebla, post) {
+    var self = this;
+
+    var akuzativenda = akuzativebla.charAt(akuzativebla.length - 1) == "n";
+
+    this.antaŭ = antaŭ;
+    if (akuzativenda) {
+      this.akuzativebla = akuzativebla.slice(0, -1);
+    }
+    else {
+      this.akuzativebla = akuzativebla;
+    }
+    this.post = post;
+    this.pozicio = Math.floor(Math.random() * 90);
+    this.akuzativo = ko.observable(Math.random() < 0.5);
+    this.akuzativenda = akuzativenda;
+    this.korekta = ko.computed(function() {
+      return self.akuzativo() == self.akuzativenda;
+    });
+    this.elektitaFrazo = ko.computed(function() {
+      return self.antaŭ + ' ' +
+        self.akuzativebla + (self.akuzativo() ? 'n' : '') + ' ' +
+        self.post;
+    });
+    this.ŝalti = function(io) {
+        var nuna = io.akuzativo();
+	io.akuzativo(!nuna);
+    }
+};
+
+/**
+ * Randomize array element order in-place.
+ * Using Fisher-Yates shuffle algorithm.
+ *
+ * From http://stackoverflow.com/a/12646864/113848
+ */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
+var ĉiujFrazoj = /* shuffleArray */([
+   new FrazoModelo("nova", "eĥoŝanĝo", "ĉiuĵaŭde"),
+   new FrazoModelo("", "ĉeĥa", "ŝaŭmmanĝaĵo"),
+   new FrazoModelo("kato ĉasas", "muson", ""),
+   new FrazoModelo("neniam forgesu", "akuzativon", ""),
+]);
+var samtempajFrazoj = 2;
+
+
+var AkuzativoModelo = function(frazoj) {
+    var self = this;
+
+    this.frazoj = ko.observableArray(frazoj);
+    this.unuaMontrataFrazo = ko.observable(0);
+    this.montratajFrazoj = ko.computed(function() {
+        var ek = self.unuaMontrataFrazo();
+        return self.frazoj.slice(ek, ek + samtempajFrazoj);
+    });
+    this.poentoj = ko.computed(function() {
+        var sumo = 0;
+        for (var i = 0; i < self.frazoj().length; i++) {
+            if (self.frazoj()[i].korekta()) sumo++;
+        }
+        return sumo;
+    });
+    this.fino = function(frazo) {
+        self.unuaMontrataFrazo(self.unuaMontrataFrazo() + 1);
+    };
+}
+ko.applyBindings(new AkuzativoModelo(ĉiujFrazoj));
+</script>
+</body>
+</html>
