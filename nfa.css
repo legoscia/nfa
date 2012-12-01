@@ -109,3 +109,13 @@ body {
     overflow: hidden;
     font-family: 'Arbutus Slab', serif;
 }
+
+.fontokodo {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border: 1px solid black;
+    background-color: #ffffee;
+    padding: 1em;
+    margin: 0;
+}
