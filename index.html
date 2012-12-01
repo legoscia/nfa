@@ -33,9 +33,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <div data-bind="foreach: montratajFrazoj">
 <p class="tienreen" data-bind="
   style: { top: pozicio + '%',
-           MozAnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s'
+           AnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s',
+           MozAnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s',
+	   WebkitAnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s'
  },
-  event: { animationend: $parent.fino },
+  event: { animationend: $parent.fino, webkitAnimationEnd: $parent.fino },
   click: ŝalti">
   <span data-bind="text: antaŭ">&nbsp;</span>
   <span data-bind="

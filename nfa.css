@@ -21,7 +21,29 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+@keyframes tienreen {
+
+    from {
+	left: 100%;
+    }
+
+    to {
+	left: -20em;
+    }
+}
+
 @-moz-keyframes tienreen {
+
+    from {
+	left: 100%;
+    }
+
+    to {
+	left: -20em;
+    }
+}
+
+@-webkit-keyframes tienreen {
 
     from {
 	left: 100%;
@@ -40,10 +62,18 @@ p.tienreen {
     height: 2em;
     white-space: nowrap;
     cursor: pointer;
+    animation-name: tienreen;
     -moz-animation-name: tienreen;
+    -webkit-animation-name: tienreen;
+    animation-duration: 15s;
     -moz-animation-duration: 15s;
+    -webkit-animation-duration: 15s;
+    animation-iteration-count: 1;
     -moz-animation-iteration-count: 1;
+    -webkit-animation-iteration-count: 1;
+    animation-timing-function: linear;
     -moz-animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
 }
 
 .kun-akuzativo:after {
