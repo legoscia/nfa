@@ -112,15 +112,28 @@ function shuffleArray(array) {
     return array;
 }
 
+var kiomDaFrazoj = 10;
+/* Ĉefe el la Fundamenta Ekzercaro: */
 var ĉiujFrazoj = shuffleArray([
-   new FrazoModelo("nova", "eĥoŝanĝo", "ĉiuĵaŭde"),
-   new FrazoModelo("", "ĉeĥa", "ŝaŭmmanĝaĵo"),
-   new FrazoModelo("kato ĉasas", "muson", ""),
-   new FrazoModelo("neniam forgesu", "akuzativon", ""),
-   new FrazoModelo("okazis", "festo", "en la domo."),
-   new FrazoModelo("mi farbis la muron", "blua", "."),
-]);
-var samtempajFrazoj = 2;
+   new FrazoModelo("Sur la tero kuŝas", "ŝtono", ""),
+   new FrazoModelo("Mi vidas", "leonon", ""),
+   new FrazoModelo("Mi parolas pri", "leono", ""),
+   new FrazoModelo("Mi konas", "Johanon", ""),
+   new FrazoModelo("Antaŭ la", "domo", "staras arbo"),
+   new FrazoModelo("Sur la fenestro kuŝas", "krajono", ""),
+   new FrazoModelo("Tiu ĉi urbo havas milionon da", "loĝantoj", ""),
+   new FrazoModelo("Mi vokas la", "knabon", ", kaj li venas"),
+   new FrazoModelo("", "Sinjoro", ", vi estas neĝentila"),
+   new FrazoModelo("Dum ŝi parolis, elfalis el ŝia buŝo", "multego", "da diamantoj"),
+   new FrazoModelo("Mi volas ke vi", "tien", "iru"),
+   new FrazoModelo("“Vi tute ne estas ĝentila,” diris la", "feino", "sen kolero"),
+   new FrazoModelo("Mi neniel povas kompreni,", "kion", "vi parolas"),
+   new FrazoModelo("Ŝi kombas al si la", "harojn", "per arĝenta kombilo"),
+   new FrazoModelo("Venigu la", "kuraciston", ", ĉar mi estas malsana"),
+   new FrazoModelo("Malfeliĉo ofte kunigas la", "homojn", ", kaj feliĉo ofte disigas ilin"),
+   new FrazoModelo("Mi farbis la muron", "blua", ""),
+]).slice(0, kiomDaFrazoj);
+var samtempajFrazoj = 3;
 
 
 var AkuzativoModelo = function(frazoj) {
