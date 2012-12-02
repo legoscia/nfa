@@ -37,7 +37,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            MozAnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s',
 	   WebkitAnimationDelay: $index() > 0 ? ((Math.random() * 5) + 's') : '0s'
  },
-  event: { animationend: $parent.fino, webkitAnimationEnd: $parent.fino },
+  event: { animationend: fino, webkitAnimationEnd: fino },
   click: ŝalti">
   <span data-bind="text: antaŭ">&nbsp;</span>
   <span data-bind="
@@ -82,6 +82,8 @@ var FrazoModelo = function(antaŭ, akuzativebla, post) {
     this.pozicio = Math.floor(Math.random() * 90);
     this.akuzativo = ko.observable(Math.random() < 0.5);
     this.akuzativenda = akuzativenda;
+    this.finmontrita = ko.observable(false);
+    this.fino = function() { self.finmontrita(true); };
     this.korekta = ko.computed(function() {
       return self.akuzativo() == self.akuzativenda;
     });
@@ -140,10 +142,10 @@ var AkuzativoModelo = function(frazoj) {
     var self = this;
 
     this.frazoj = ko.observableArray(frazoj);
-    this.unuaMontrataFrazo = ko.observable(0);
     this.montratajFrazoj = ko.computed(function() {
-        var ek = self.unuaMontrataFrazo();
-        return self.frazoj.slice(ek, ek + samtempajFrazoj);
+        return self.frazoj()
+            .filter(function(frazo) { return !frazo.finmontrita() })
+            .slice(0, samtempajFrazoj);
     });
     this.poentoj = ko.computed(function() {
         var sumo = 0;
@@ -152,9 +154,6 @@ var AkuzativoModelo = function(frazoj) {
         }
         return sumo;
     });
-    this.fino = function(frazo) {
-        self.unuaMontrataFrazo(self.unuaMontrataFrazo() + 1);
-    };
 }
 ko.applyBindings(new AkuzativoModelo(ĉiujFrazoj));
 </script>
