@@ -79,7 +79,9 @@ var FrazoModelo = function(antaŭ, akuzativebla, post) {
       this.akuzativebla = akuzativebla;
     }
     this.post = post;
-    this.pozicio = Math.floor(Math.random() * 90);
+    /* la pozicio devas ŝanĝigi depende de aliaj frazoj;
+       ĉi tiu valoro estos ŝanĝita sube. */
+    this.pozicio = 0;
     this.akuzativo = ko.observable(Math.random() < 0.5);
     this.akuzativenda = akuzativenda;
     this.finmontrita = ko.observable(false);
@@ -142,6 +144,22 @@ var AkuzativoModelo = function(frazoj) {
     var self = this;
 
     this.frazoj = ko.observableArray(frazoj);
+
+    /* Certigu ke neniam du frazoj samtempe montrataj havas
+       la saman pozicion. */
+    var pozicioj = [];
+    this.frazoj().forEach(function(frazo) {
+        var pozicio;
+        /* La pozicio ĉiam estas oble de 10% de la ekrano.
+           Espereble tio donas sufiĉe da distanco. */
+        while (pozicio = Math.floor(Math.random() * 9),
+               pozicioj.indexOf(pozicio) != -1)
+           ;
+        frazo.pozicio = pozicio * 10;
+        pozicioj.push(pozicio);
+        while (pozicioj.length >= samtempajFrazoj)
+            pozicioj.shift();
+    });
     this.montratajFrazoj = ko.computed(function() {
         return self.frazoj()
             .filter(function(frazo) { return !frazo.finmontrita() })
