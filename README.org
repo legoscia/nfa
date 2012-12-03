@@ -1,0 +1,13 @@
+* Neniam forgesu akuzativo
+Tio ĉi estas ludo en kiu la ludanto devas alklaki frazojn flugantajn
+tra la ekrano por aldoni aŭ forpreni akuzativajn finaĵojn laŭbezone.
+
+La ludo funkcias en retumilo.  Mi provis ĝin per Firefox 17.0, Google
+Chrome 23.0.1271.95, kaj Opera 12.11.  (Mi ne havas Internet Explorer,
+sed mi dubas ke ĝi funkcius.)
+
+La ludo baziĝas sur [[http://www.w3.org/TR/css3-animations/][CSS-animacioj]] kaj [[http://knockoutjs.com/][knockout.js]].  Ĝi estas eldonita
+laŭ la MIT-permesilo.
+
+** Ludu en la reto
+Ludebla kopio troviĝas ĉe [[http://legoscia.github.com/nfa/]].
